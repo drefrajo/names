@@ -51,4 +51,4 @@ This means that a smart contract can never claim a name, thus making it impossib
 ## Finally
 Feel free to read through the code and learn from it. Don't deploy it for purposes other than testing code for yourself.
 
-If you have any questions, it's probably best to contact me through [Twitter](https://twitter.com/SirSupersecret).
+If you have any questions, it's probably best to contact me through [Twitter](https://twitter.com/drefrajo).
