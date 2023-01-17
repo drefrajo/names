@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Telling smart contracts and EOAs apart used to be difficult. The Outsider Protocol changes that.">
+    <title>Names</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/javascript" src="ethers-5.6.umd.min.js"></script>
+    <script type="application/javascript"  src="logic.js"></script>
+    <script defer src="cdn.min.js"></script>
+    
+</head>
+<header>
+    <a href="https://names.nugget.network">
+        <div class="navbar">
+            <div class="imgBox"></div>
+            <img src="favicon.ico" alt="" style="image-rendering: pixelated;"><span>The Names Protocol  </span> 
+        </div>
+    </a>
+</header>
+<body>
+    <div class="interactable" x-data="interactive">
+        <div class="container">
+            <div x-bind:class="'status ' + searchData.state"></div>
+            
+            <input id="search" class="inputTopLevel" placeholder="Search..." x-on:input.debounce.750="lookup($event.target.value)" x-on:input="lookupHint($event.target.value)"/>
+        </div>
+        <div class="container">
+            <div class="box">
+                <div class="interactiveHeading">
+                    Name
+                </div>
+                <div x-text="searchData.name" class="scrollText">
+                </div>
+                <div class="interactiveHeading">
+                    Address
+                </div>
+                <div x-text="searchData.address" class="scrollText">
+                </div>
+            </div>
+        </div>
+        <div class="separator"></div>
+        <div class="wrap-collapsible">
+            <input id="collapsible" class="toggle" type="checkbox">
+            <label for="collapsible" class="lbl-toggle">Claim a Name</label>
+            <div class="collapsible-content">
+                <div class="collapsible-inner">
+                    <div class="container">
+                        <div x-bind:class="'status ' + setData.connectionState" class="status"></div>
+                        <button @click="connect()" x-bind:disabled="connected || !available">Connect</button>
+                    </div>
+                    <div x-bind:class="'container ' + (connected ? '' : 'disabled')">
+                        <div class="box">
+                            <div class="interactiveHeading">
+                                Your Name
+                            </div>
+                            <div x-text="setData.currentName" class="scrollText">
+                            </div>
+                            <div class="interactiveHeading">
+                                Choose New Name
+                            </div>
+                            <div class="sideBySide">
+                                <input id="choose" class="inputNested" placeholder="Name..." x-model="setData.handle" x-on:input.debounce.750="preview($event.target.value)" x-on:input="previewHint($event.target.value)"/>
+                                <div x-text="setData.handleCount" class="profileNumber">
+                                </div>
+                            </div>
+                            <div class="handleOverflow"></div>
+                            <div class="sideBySide">
+                                <div x-bind:class="'status ' + setData.progressState"></div>
+                                <button @click="claim" x-bind:disabled="!connected || !setData.hasText || setData.progressState == 'pending'" x-text="setData.buttonText"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="text">
+            <h1>Hi, mind a little explanation?</h1>
+            <p>
+                Thank's for checking out this project!
+                <br>
+                You know the ENS, or DNS? Well, the Names Protocol is very similar, but simplified as much as possible.
+                It's main purpose lies in resolving names (say "Bob") to Ethereum addresses (say "0x1234...") and vice versa.
+                <br>
+            </p>
+        </div>
+        <div class="text">
+            <h1>What for?</h1>
+            <p>
+                Some time ago I developed the <a href="https://outsider.nugget.network">Outsider Protocol</a>.
+                All it does is to check whether some Ethereum address could be a smart contract or not.
+                With the Names Protocol I wanted, among other things, to test the practicality of implementing it in another project.
+                (My conclusion: it's really easy to do ;])
+                Also, I really wanted to develop a blockchain username system.
+            </p>
+        </div>
+        <div class="text">
+            <h1>But ENS already does that!</h1>
+            <p>
+                You're right.
+                <br>
+                The thing is, when I looked at ENS, TBH, it seemed kinda complicated.
+                It involves 5-day-long process of participating in an auction, to receive the permission to basically "rent" a name.
+                These names are resellable, which means some are found on NFT marketplaces while others require the auction process to acquire them.
+                Once you control an ENS name, you can add records to it, like, for example, a BTC address.
+            </p>
+        </div>
+        <div class="text">
+            <h1>OK, and you've obviously done it better...?</h1>
+            <p>
+                IDK. Different.
+                <br>
+                See, the Names Protocol is really only good for one thing: usernames.
+                It does not store any additional data, neither does it feature it's own TLD.
+                But - it has its own, more or less unique structure:
+                <br>
+                A name here is made up of three parts: some arbitrary text, a "/" and a number.
+                In practice this results in names like, for example, "Alice/5".
+                The thing is, out of the three parts a user only ever gets to directly choose the first.
+                <br>
+                This is what makes the Names Protocol unique:
+                <br>
+                <br>
+                The number is basically an index for the chosen text.
+                <br>
+                <br>
+                This means that the first to claim "Bob" will be assigned "Bob/0".
+                If someone else want's to be "Bob" as well, he is assigned "Bob/1".
+                This is important, because through the implementation of Outsider, these names are non-transferable, 
+                which in turn means they can never be sold without transferring ones private keys.
+                <br>
+                In short, this means that once claimed, a name in the Name Protocol will forever resolve the same address.
+                Now, if someone decides to change their name, they can do so. 
+                When resolving an address to a name, the result will always be the most recent name.
+                But any older names remain valid for as long as the blockchain continues to operate.
+            </p>
+        </div>
+        <div class="text">
+            <h1>At what cost?</h1>
+            <p>
+                Actually, it's really cheap.
+                The first name is completely free (+ tx fees).
+                <br>
+                This results in a slight problem: "Alice/0" is obviously more convenient than, say, "Alice/1553".
+                Therefore I've added a slight disincetive: a fee paid with the networks native token.
+                Instead of burning it though, I've decided to turn this into a small bounty for myself :O.
+                <br>
+                In theory this should support further development of such projects.
+            </p>
+        </div>
+        <div class="text">
+            <h1>Help?!</h1>
+            <p>
+                You're a user? That's great. Use the "Search..." bar to look up either a name or an address - no Ethereum wallet required.
+                If you want, you can also claim your own name using the lower part of this dApp.
+                <br>
+                <br>
+                You're a developer? Integrating this into your own software should be pretty easy. See <a href="https://github.com/SirSupersecret/names" target="_blank">GitHub</a> for more details.
+                <br>
+                <br>
+                The Names Protocol is currently only deployed on the Mumbai testnet, but Polygon mainnet will follow soon. 
+                As to why not Ethereum:
+                In my opinion, Ethereums level of decentralization and security are simply not as important as a frictionless UX (especially for this project).
+                <br>
+                <br>
+                You want to support me? Go and try out my dApp, and if you liked it, go tell someone else about it.
+                <br>
+                <br>
+                In case you have any questions, it's best to contact me using <a href="https://twitter.com/SirSupersecret" target="_blank">Twitter</a>.
+            </p>
+        </div>
+    </div>
+</body>
+<footer>
+    <div class="footer">
+        <a href="https://github.com/SirSupersecret/names">
+            <img src="github.svg" alt="GitHub" style="margin-bottom: 0.7rem; margin-left: 0.7rem;">
+        </a>
+        <a href="https://twitter.com/SirSupersecret">
+            <img src="twitter.svg" alt="Twitter" style="margin-bottom: 0.7rem; padding-left: 2rem; padding-right: 1.4rem;">
+        </a>
+        <a href="https://nugget.network">
+            <img src="nugget.svg" alt="Nugget" style="width: 3.3rem; margin-bottom: 0.05rem;">
+        </a>
+    </div>
+</footer>
+</html>
