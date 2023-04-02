@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Telling smart contracts and EOAs apart used to be difficult. The Outsider Protocol changes that.">
+    <meta name="description" content="Digital names for a digital age.">
     <title>Names</title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
@@ -92,28 +92,25 @@
         <div class="text">
             <h1>What for?</h1>
             <p>
-                Some time ago I developed the <a href="https://outsider.nugget.network">Outsider Protocol</a>.
-                All it does is to check whether some Ethereum address could be a smart contract or not.
-                With the Names Protocol I wanted, among other things, to test the practicality of implementing it in another project.
-                (My conclusion: it's really easy to do ;])
-                Also, I really wanted to develop a blockchain username system.
+                I really wanted to develop a blockchain username system.
+                Also I think that this system has some key advantages to similar systems like the ENS.
             </p>
         </div>
         <div class="text">
-            <h1>But ENS already does that!</h1>
+            <h1>But ENS works well!</h1>
             <p>
                 You're right.
                 <br>
                 The thing is, when I looked at ENS, TBH, it seemed kinda complicated.
-                It involves 5-day-long process of participating in an auction, to receive the permission to basically "rent" a name.
-                These names are resellable, which means some are found on NFT marketplaces while others require the auction process to acquire them.
+                It involves a multi-step procedure to receive the permission to basically "rent" a name.
+                These names are resellable, which means some are found on NFT marketplaces while others require using the ENS-UI to acquire them.
                 Once you control an ENS name, you can add records to it, like, for example, a BTC address.
             </p>
         </div>
         <div class="text">
-            <h1>OK, and you've obviously done it better...?</h1>
+            <h1>And...?</h1>
             <p>
-                IDK. Different.
+                IDK. I just built something different.
                 <br>
                 See, the Names Protocol is really only good for one thing: usernames.
                 It does not store any additional data, neither does it feature it's own TLD.
@@ -144,44 +141,39 @@
             <h1>At what cost?</h1>
             <p>
                 Actually, it's really cheap.
-                The first name is completely free (+ tx fees).
-                <br>
-                This results in a slight problem: "Alice/0" is obviously more convenient than, say, "Alice/1553".
-                Therefore I've added a slight disincetive: a fee paid with the networks native token.
-                Instead of burning it though, I've decided to turn this into a small bounty for myself :O.
-                <br>
-                In theory this should support further development of such projects.
+                All you pay are transaction fees.
             </p>
         </div>
         <div class="text">
             <h1>Help?!</h1>
             <p>
-                You're a user? That's great. Use the "Search..." bar to look up either a name or an address - no Ethereum wallet required.
+                You just want to try it out? That's great. Use the "Search..." bar to look up either a name or an address - no Ethereum wallet required.
                 If you want, you can also claim your own name using the lower part of this dApp.
                 <br>
                 <br>
-                You're a developer? Integrating this into your own software should be pretty easy. See <a href="https://github.com/SirSupersecret/names" target="_blank">GitHub</a> for more details.
+                You're a developer? Integrating this into your own software should be pretty easy. See <a href="https://github.com/drefrajo/names" target="_blank">GitHub</a> for more details.
                 <br>
                 <br>
-                The Names Protocol is currently only deployed on the Mumbai testnet, but Polygon mainnet will follow soon. 
+                The Names Protocol is currently only deployed on the Mumbai testnet, but some mainnet will follow soonish. 
                 As to why not Ethereum:
                 In my opinion, Ethereums level of decentralization and security are simply not as important as a frictionless UX (especially for this project).
                 <br>
                 <br>
-                You want to support me? Go and try out my dApp, and if you liked it, go tell someone else about it.
+                You want to support me? Go and try out my dApp. 
+                If you liked it, go tell someone else about it.
                 <br>
                 <br>
-                In case you have any questions, it's best to contact me using <a href="https://twitter.com/SirSupersecret" target="_blank">Twitter</a>.
+                In case you have any questions, it's feel free to contact me using <a href="https://twitter.com/drefrajo" target="_blank">Twitter</a>.
             </p>
         </div>
     </div>
 </body>
 <footer>
     <div class="footer">
-        <a href="https://github.com/SirSupersecret/names">
+        <a href="https://github.com/drefrajo/names">
             <img src="github.svg" alt="GitHub" style="margin-bottom: 0.7rem; margin-left: 0.7rem;">
         </a>
-        <a href="https://twitter.com/SirSupersecret">
+        <a href="https://twitter.com/drefrajo">
             <img src="twitter.svg" alt="Twitter" style="margin-bottom: 0.7rem; padding-left: 2rem; padding-right: 1.4rem;">
         </a>
         <a href="https://nugget.network">
