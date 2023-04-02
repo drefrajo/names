@@ -10,7 +10,7 @@ contract Names {
     mapping(string => address) public resolveName;
     mapping(string => uint) public handleCount;
 
-    function claim(string memory _handle, bytes memory _sig) external payable {
+    function claim(string memory _handle, bytes memory _sig) external {
         string memory name = string.concat(_handle, "/", Strings.toString(handleCount[_handle]));
 
         resolveAddress[msg.sender] = name;
