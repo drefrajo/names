@@ -29,18 +29,21 @@ This might make names less popular over time.
 3) Once a name is changed, you can no longer go back to the exact name. 
 This means that while you can choose the same string, the number will always be different.
 
+>Note: Gasless claiming is also possible using `metaClaim(string, address, uint, bytes)`
+
 ### Lookup
 Using either the web interface located [here](https://names.nugget.network) or by calling `names.resolveAddress(address)` / `names.resolveName(string)` through a smart contract or RPC, a lookup can be performed.
 
 See [here](/src) for an example implementation.
 
 ## Resalability
-Or actually the lack thereof. Claiming a name requires an any account to be externally owned (this is what Outsider is for). 
-Anyone who has not yet registered with the Outsider Protocol will automatically be asked to sign a message, which is automatically relayed to the Outsider contract.
+Or actually the lack thereof. 
+Once claimed, a name (e.g. "Bob/3") is forever locked to a single address.
 
-This means that a smart contract can never claim a name, thus making it impossible to sell ownership of a name without also transferring the private key.
+Theoretically, another smart contract could be used to make ownership of an address resalable.
+Practially though, this is not really useful.
 
->Another consequence is that a name in the Names Protocol cannot be recovered when the private key is lost.
+>A consequence is that a name in the Names Protocol cannot be recovered when the private key is lost.
 
 ## Where is it?
 |         | Mainnet | Mumbai Testnet |
