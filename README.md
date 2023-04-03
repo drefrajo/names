@@ -48,7 +48,7 @@ Practially though, this is not really useful.
 ## Where is it?
 |         | Mainnet | Mumbai Testnet |
 | ------- | ------- | ------- |
-| new contract | not yet | not yet |
+| new contract | not yet | [0x702100b319EcAa1E2D61b11F9aBB4BA3F92C65D0](https://mumbai.polygonscan.com/address/0x702100b319EcAa1E2D61b11F9aBB4BA3F92C65D0) |
 | old contract | never | [0x761772008F5eabE3B178E05a6f764A792F299B47](https://mumbai.polygonscan.com/address/0x761772008F5eabE3B178E05a6f764A792F299B47) |
 
 ## Finally
