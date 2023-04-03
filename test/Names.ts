@@ -11,29 +11,18 @@ describe("Names", function () {
       const Names = await ethers.getContractFactory("Names");
       const names = await Names.deploy();
 
-      const sig = owner.signMessage(
-        ethers.utils.arrayify(
-          ethers.utils.solidityKeccak256(
-            ["string"],
-            ["I am worthy."]
-          )
-        )
-      );
-
-      // when testing deactivate the EOA-check
-      
       // test basic name claiming
-      expect(await names.claim("FirstTest", [])).to.emit(names, "NameClaimed");
+      expect(await names.claim("FirstTest")).to.emit(names, "NameClaimed");
 
       expect(await names.resolveAddress(owner.address)).to.equal("FirstTest/0");
       
       // test name overwriting
-      expect(await names.claim("ThirdTest", [])).to.emit(names, "NameClaimed");
+      expect(await names.claim("ThirdTest")).to.emit(names, "NameClaimed");
       
       expect(await names.resolveAddress(owner.address)).to.equal("ThirdTest/0");
 
       // test name overwriting the second time
-      expect(await names.claim("FirstTest", sig)).to.emit(names, "NameClaimed");
+      expect(await names.claim("FirstTest")).to.emit(names, "NameClaimed");
 
       expect(await names.resolveAddress(owner.address)).to.equal("FirstTest/1");
 
@@ -46,7 +35,34 @@ describe("Names", function () {
       expect(await names.resolveName("SecondTest/0")).to.equal(ethers.constants.AddressZero);
 
       // test other signer on already claimed name
-      expect(await names.connect(other).claim("FirstTest", [])).to.emit(names, "NameClaimed").withArgs(other.address, "FirstTest/2");
+      expect(await names.connect(other).claim("FirstTest")).to.emit(names, "NameClaimed").withArgs(other.address, "FirstTest/2");
+    });
+
+    it("Should correctly handle meta transactions", async function () {
+      const [owner, other] = await ethers.getSigners();
+
+      const Names = await ethers.getContractFactory("Names");
+      const names = await Names.deploy();
+
+      const sig = owner.signMessage(
+        ethers.utils.arrayify(
+          ethers.utils.solidityKeccak256(
+            ["string", "address", "uint"],
+            ["MetaTest", await owner.getAddress(), 0]
+          )
+        )
+      );
+      
+      // test meta transaction mechanism
+      await expect(names.metaClaim("MetaTestdd", await owner.getAddress(), 0, sig)).to.be.revertedWith("Invalid signature...");
+      await expect(names.metaClaim("MetaTest", await owner.getAddress(), 5, sig)).to.be.revertedWith("Invalid signature...");
+      await expect(names.metaClaim("MetaTest", await other.getAddress(), 0, sig)).to.be.revertedWith("Invalid signature...");
+
+      expect(await names.connect(other).metaClaim("MetaTest", await owner.getAddress(), 0, sig)).to.emit(names, "NameClaimed");
+
+      await expect(names.metaClaim("MetaTest", await owner.getAddress(), 0, sig)).to.be.reverted;
+
+      expect(await names.resolveAddress(owner.address)).to.equal("MetaTest/0");
     });
   });
 });
