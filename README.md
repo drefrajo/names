@@ -11,7 +11,7 @@ Just a simple claim button.
 
 ## How it works
 Actually, it's pretty easy. 
-Just use the [dApp](https://names.nugget.network) on the projects front page.
+Just use the [dApp](https://names-protocol.netlify.app) on the projects front page.
 For a simple lookup you don't even need an Ethereum wallet.
 
 ### Claiming Names
@@ -32,7 +32,7 @@ This means that while you can choose the same string, the number will always be 
 >Note: Gasless claiming is also possible using `metaClaim(string, address, uint, bytes)`
 
 ### Lookup
-Using either the web interface located [here](https://names.nugget.network) or by calling `names.resolveAddress(address)` / `names.resolveName(string)` through a smart contract or RPC, a lookup can be performed.
+Using either the web interface located [here](https://names-protocol.netlify.app) or by calling `names.resolveAddress(address)` / `names.resolveName(string)` through a smart contract or RPC, a lookup can be performed.
 
 See [here](/src) for an example implementation.
 
